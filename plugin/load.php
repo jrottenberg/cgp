@@ -13,13 +13,13 @@ $obj = new Type_Default($CONFIG);
 $obj->data_sources = array('shortterm', 'midterm', 'longterm');
 $obj->ds_names = array(
 	'shortterm' => ' 1 min',
-	'midterm' => ' 5 min',
-	'longterm' => '15 min',
+	'midterm'   => ' 5 min',
+	'longterm ' => '15 min',
 );
 $obj->colors = array(
 	'shortterm' => '00ff00',
-	'midterm' => '0000ff',
-	'longterm' => 'ff0000',
+	'midterm'   => '0000ff',
+	'longterm'  => 'ff0000',
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
