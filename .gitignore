@@ -1,0 +1,6 @@
+# Config will be put on the project, but won't be track
+conf/config.local.php
+
+
+# Regular code editor junk
+*.swp
