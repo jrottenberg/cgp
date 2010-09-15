@@ -16,7 +16,7 @@ $CONFIG['rrdtool_opts'] = '';
 #$CONFIG['cat']['category1'] = array('host1', 'host2');
 
 # default plugins to show on host page
-$CONFIG['overview'] = array('load', 'cpu', 'memory', 'swap');
+$CONFIG['overview'] = array('memcached');
 
 # default plugins time range
 $CONFIG['time_range']['default'] = 86400;

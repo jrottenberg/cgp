@@ -21,7 +21,7 @@ $heigth = $_GET['y'];
 $seconds = $_GET['s'];
 
 html_start();
-
+echo "$plugin | $pinstance | $type |$tinstance |";
 printf('<h2><a href="%s">%s</a></h2>'."\n",
 	$CONFIG['weburl'].'/host.php?h='.htmlentities($host), $host
 );
