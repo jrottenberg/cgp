@@ -37,6 +37,7 @@ $obj->colors = array(
 	'logging'   => 'a000a0',
 	'finishing' => '008080',
 	'idle_cleanup' => 'ffff00',
+	'count'     => '00e000',
 );
 $obj->width = $width;
 $obj->heigth = $heigth;
