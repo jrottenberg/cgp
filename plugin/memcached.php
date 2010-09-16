@@ -66,7 +66,7 @@ switch($_GET['t']) {
         $obj = new Type_Default($CONFIG);
         $obj->data_sources = array('value');
         $obj->ds_names = array(
-	        'value ' => 'Connections',
+	        'value ' => 'Connections ',
         );
         $obj->colors = array(
 	        'percent' => '00b000',
@@ -98,7 +98,7 @@ switch($_GET['t']) {
         $obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
 		$obj->ds_names = array(
-			'rx' => 'Receive',
+			'rx' => 'Receive  ',
 			'tx' => 'Transmit ',
 		);
 		$obj->colors = array(
@@ -167,7 +167,7 @@ switch($_GET['t']) {
         $obj->data_sources = array('user', 'syst');
 		$obj->order = array( 'user', 'syst');
 		$obj->ds_names = array(
-			'user' => 'User ',
+			'user' => 'User   ',
 			'syst' => 'System ',
 		);
 		$obj->colors = array(
