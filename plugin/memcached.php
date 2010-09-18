@@ -47,9 +47,15 @@ switch($_GET['t']) {
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('flush', 'get', 'set');
 		$obj->ds_names = array(
+<<<<<<< HEAD
 			'flush' => 'Flush ',
 			'get'   => 'Get   ',
 			'set'   => 'Set   ',
+=======
+			'flush' => 'Flush',
+			'get'   => 'Get',
+			'set'   => 'Set',
+>>>>>>> 10ad741a22797b6710be1091d9e502e71929f255
 		);
 		$obj->colors = array(
 			'flush' => '00e000',
@@ -98,8 +104,13 @@ switch($_GET['t']) {
         $obj->data_sources = array('rx', 'tx');
 		$obj->order = array('rx', 'tx');
 		$obj->ds_names = array(
+<<<<<<< HEAD
 			'rx' => 'Receive  ',
 			'tx' => 'Transmit ',
+=======
+			'rx' => 'Receive',
+			'tx' => 'Transmit',
+>>>>>>> 10ad741a22797b6710be1091d9e502e71929f255
 		);
 		$obj->colors = array(
 			'rx' => '0000ff',
@@ -114,9 +125,15 @@ switch($_GET['t']) {
 		$obj = new Type_GenericStacked($CONFIG);
 		$obj->order = array('evictions', 'hits', 'misses');
 		$obj->ds_names = array(
+<<<<<<< HEAD
 			'evictions' => 'Evictions ',
 			'hits'      => 'Hits      ',
 			'misses'    => 'Misses    ',
+=======
+			'evictions' => 'Evictions',
+			'hits'      => 'Hits',
+			'misses'    => 'Misses',
+>>>>>>> 10ad741a22797b6710be1091d9e502e71929f255
 		);
 		$obj->colors = array(
 			'evictions' => '00e000',
@@ -167,8 +184,13 @@ switch($_GET['t']) {
         $obj->data_sources = array('user', 'syst');
 		$obj->order = array( 'user', 'syst');
 		$obj->ds_names = array(
+<<<<<<< HEAD
 			'user' => 'User   ',
 			'syst' => 'System ',
+=======
+			'user' => 'User',
+			'syst' => 'System',
+>>>>>>> 10ad741a22797b6710be1091d9e502e71929f255
 		);
 		$obj->colors = array(
 			'user'  => '00e000',
