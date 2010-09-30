@@ -42,7 +42,7 @@ if (is_array($CONFIG['regexp'])) {
 # show all uncategorized hosts
 if ($chosts) {
     echo "<h2>uncategorized</h2>\n";
-    host_summary($uhosts);
+    host_summary($chosts);
 }
 
 html_end();
