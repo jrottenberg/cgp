@@ -43,7 +43,7 @@ a:hover {
 }
 
 table.summary th {
-	width: 150px;
+	width: 250px;
 	font-weight: normal;
 	text-align: left;
 }
@@ -71,7 +71,7 @@ ul {
 }
 
 li {
-	display: inline;
+/*	display: inline;*/
 	margin-left: 10px;
 }
 
