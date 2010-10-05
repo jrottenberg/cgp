@@ -20,7 +20,7 @@ function collectd_hosts() {
 }
 
 # returns an array of plugins/pinstances/types/tinstances
-function collectd_plugindata($host) {
+function collectd_plugindata($host, $plugin=NULL) {
 	global $CONFIG;
 
 	if (!is_dir($CONFIG['datadir'].'/'.$host))
@@ -31,31 +31,27 @@ function collectd_plugindata($host) {
 	if (!$files)
 		return false;
 	
-	$data;
-	$i = 0;
+	$data = array();
 	foreach($files as $item) {
-		unset($part);
+		preg_match('#([\w_]+)(?:\-(.+))?/([\w_]+)(?:\-(.+))?\.rrd#', $item, $matches);
 
-		# split item by plugin/type
-		$part = explode('/', $item);
-		$part[1] = preg_replace('/\.rrd/', '', $part[1]);
-
-		# plugin
-		$data[$i]['p'] = preg_replace('/-.+/', '', $part[0]);
-
-		# plugin instance
-		if(preg_match('/-/', $part[0]))
-			$data[$i]['pi'] = preg_replace('/^[a-z_]+\-/', '', $part[0]);
-		
-		# type
-		$data[$i]['t'] = preg_replace('/-.+/', '', $part[1]);
-
-		# type instance
-		if(preg_match('/-/', $part[1]))
-			$data[$i]['ti'] = preg_replace('/^[a-z_]+\-/', '', $part[1]);
-
-		$i++;
+		$data[] = array(
+			'p'  => $matches[1],
+			'pi' => isset($matches[2]) ? $matches[2] : '',
+			't'  => $matches[3],
+			'ti' => isset($matches[4]) ? $matches[4] : '',
+		);
 	}
+
+	# only return data about one plugin
+	if (!is_null($plugin)) {
+		foreach($data as $item) {
+			if ($item['p'] == $plugin)
+				$pdata[] = $item;
+		}
+		$data = $pdata;
+	}
+
 	return($data);
 }
 
@@ -104,42 +100,44 @@ function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
 	return $return;
 }
 
+# group plugin files for graph generation
+function group_plugindata($plugindata) {
+	global $CONFIG;
+
+	# type instances should be grouped in 1 graph
+	foreach ($plugindata as $item) {
+		# backwards compatibility
+		if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface)$/', $item['p']))
+			unset($item['ti']);
+		$data[] = $item;
+	}
+
+	# remove duplicates
+	$data = array_map("unserialize", array_unique(array_map("serialize", $data)));
+
+	return $data;
+}
+
 # generate graph url's for a plugin of a host
 function graphs_from_plugin($host, $plugin) {
 	global $CONFIG;
 
-	$pis = collectd_plugindetail($host, $plugin, 'pi');
-	$ts = collectd_plugindetail($host, $plugin, 't');
-	$tis = collectd_plugindetail($host, $plugin, 'ti');
-	if (!$pis) $pis = array('NULL');
-	if (!$tis) $tis = array('NULL');
-	# backwards compatibility
-	if ($CONFIG['version'] >= 5 || !preg_match('/^(df|interface)$/', $plugin))
-		$tis = array('NULL');
+	$plugindata = collectd_plugindata($host, $plugin);
+	$plugindata = group_plugindata($plugindata);
 
-	foreach($pis as $pi) {
-		foreach ($tis as $ti) {
-			foreach ($ts as $t) {
-				$items = array(
-					'h' => $host,
-					'p' => $plugin,
-					'pi' => $pi,
-					't' => $t,
-					'ti' => $ti
-				);
+	foreach ($plugindata as $items) {
+		$items['h'] = $host;
 
-				$time = array_key_exists($plugin, $CONFIG['time_range'])
-					? $CONFIG['time_range'][$plugin]
-					: $CONFIG['time_range']['default'];
+		$time = array_key_exists($plugin, $CONFIG['time_range'])
+			? $CONFIG['time_range'][$plugin]
+			: $CONFIG['time_range']['default'];
 
-				printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
-					$CONFIG['weburl'],
-					build_url('detail.php', $items, $time),
-					$CONFIG['weburl'],
-					build_url('graph.php', $items, $time)
-				);
-			}
-		}
+		printf('<a href="%s/%s"><img src="%s/%s"></a>'."\n",
+			$CONFIG['weburl'],
+			build_url('detail.php', $items, $time),
+			$CONFIG['weburl'],
+			build_url('graph.php', $items, $time)
+		);
 	}
 }
 
